@@ -1,14 +1,17 @@
-ARG NODE_VERSION=12.18.3
-FROM node:${NODE_VERSION}-alpine
-RUN apk add --no-cache make pkgconfig gcc g++ python libx11-dev libxkbfile-dev libsecret-dev
-ARG version=latest
-WORKDIR /home/theia
-ADD $version.package.json ./package.json
-ARG GITHUB_TOKEN
-RUN yarn --pure-lockfile && \
+FROM centos:7
+# install development tools
+RUN curl --silent --location https://rpm.nodesource.com/setup_10.x | bash - && \
+    yum groupinstall -y "Development Tools" && \
+    yum install -y nodejs && \
+    npm install -g yarn
+
+# required file to install Theia
+COPY package.json run_theia.sh /theia-app/
+
+# build theia
+WORKDIR /theia-app
+RUN yarn && \
     NODE_OPTIONS="--max_old_space_size=4096" yarn theia build && \
-    yarn theia download:plugins && \
-    yarn --production && \
     yarn autoclean --init && \
     echo *.ts >> .yarnclean && \
     echo *.ts.map >> .yarnclean && \
@@ -16,26 +19,16 @@ RUN yarn --pure-lockfile && \
     yarn autoclean --force && \
     yarn cache clean
 
-FROM node:${NODE_VERSION}-alpine
-# See : https://github.com/theia-ide/theia-apps/issues/34
-RUN addgroup theia && \
-    adduser -G theia -s /bin/sh -D theia;
-RUN chmod g+rw /home && \
-    mkdir -p /home/project && \
-    chown -R theia:theia /home/theia && \
-    chown -R theia:theia /home/project;
-RUN apk add --no-cache git openssh bash libsecret
+# create theia rpm
+RUN npm run build-rpm
 
+# transfer rpm to new clean image and demonstrate successful rpm install (yum will handle all rpm dependencies i.e. Node v10)
+FROM centos:7
+COPY --from=0 /root/rpmbuild/RPMS/x86_64/theia-0.0.1-1.x86_64.rpm /
+RUN curl --silent --location https://rpm.nodesource.com/setup_10.x | bash - && \
+    yum install -y theia-0.0.1-1.x86_64.rpm && \
+    rm -f theia-0.0.1-1.x86_64.rpm
 
-# Java
-RUN apt-get update && apt-get -y install openjdk-11-jdk maven gradle
-
-ENV HOME /home/theia
-WORKDIR /home/theia
-COPY --from=0 --chown=theia:theia /home/theia /home/theia
+ENV SHELL /bin/bash
 EXPOSE 3000
-ENV SHELL=/bin/bash \
-    THEIA_DEFAULT_PLUGINS=local-dir:/home/theia/plugins
-ENV USE_LOCAL_GIT true
-USER theia
-ENTRYPOINT [ "node", "/home/theia/src-gen/backend/main.js", "/home/project", "--hostname=0.0.0.0" ]
+CMD ["theia","start","--hostname=0.0.0.0"]
