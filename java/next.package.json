@@ -3,7 +3,7 @@
     "theia": {
         "frontend": {
             "config": {
-                "applicationName": "Theia JavaScript/TypeScript Example",
+                "applicationName": "Theia Python Example",
                 "preferences": {
                     "files.enableTrash": false
                 }
@@ -11,19 +11,15 @@
         }
     },
     "dependencies": {
-        "@theia/callhierarchy": "next",
-        "@theia/debug": "next",
         "@theia/editor-preview": "next",
         "@theia/file-search": "next",
         "@theia/getting-started": "next",
         "@theia/git": "next",
         "@theia/markers": "next",
         "@theia/messages": "next",
-        "@theia/mini-browser": "next",
+        "@theia/monaco": "next",
         "@theia/navigator": "next",
         "@theia/outline-view": "next",
-        "@theia/plugin": "next",
-        "@theia/plugin-ext": "next",
         "@theia/plugin-ext-vscode": "next",
         "@theia/preferences": "next",
         "@theia/preview": "next",
@@ -103,6 +99,6 @@
         "vscode-builtin-xml": "https://github.com/theia-ide/vscode-builtin-extensions/releases/download/v1.39.1-prel/xml-1.39.1-prel.vsix",
         "vscode-builtin-yaml": "https://github.com/theia-ide/vscode-builtin-extensions/releases/download/v1.39.1-prel/yaml-1.39.1-prel.vsix",
         "vscode-editorconfig": "https://github.com/theia-ide/editorconfig-vscode/releases/download/v0.14.4/EditorConfig-0.14.4.vsix",
-        "vscode-eslint": "https://github.com/theia-ide/vscode-eslint/releases/download/release%2F2.0.15/vscode-eslint-2.0.15.vsix"
+        "vscode-python": "https://open-vsx.org/api/ms-python/python/2020.8.105369/file/ms-python.python-2020.8.105369.vsix"
     }
 }
