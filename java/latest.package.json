@@ -1,12 +1,9 @@
 {
     "private": true,
-    "name": "@theia/cpp-docker-example",
-    "version": "0.0.1",
-    "license": "Apache-2.0",
     "theia": {
         "frontend": {
             "config": {
-                "applicationName": "Theia C/C++ Example",
+                "applicationName": "Theia JavaScript/TypeScript Example",
                 "preferences": {
                     "files.enableTrash": false
                 }
@@ -15,39 +12,24 @@
     },
     "dependencies": {
         "@theia/callhierarchy": "latest",
-        "@theia/console": "latest",
-        "@theia/core": "latest",
         "@theia/debug": "latest",
-        "@theia/editor": "latest",
         "@theia/editor-preview": "latest",
         "@theia/file-search": "latest",
-        "@theia/filesystem": "latest",
         "@theia/getting-started": "latest",
         "@theia/git": "latest",
-        "@theia/keymaps": "latest",
         "@theia/markers": "latest",
         "@theia/messages": "latest",
-        "@theia/metrics": "latest",
         "@theia/mini-browser": "latest",
-        "@theia/monaco": "latest",
         "@theia/navigator": "latest",
         "@theia/outline-view": "latest",
-        "@theia/output": "latest",
         "@theia/plugin": "latest",
         "@theia/plugin-ext": "latest",
         "@theia/plugin-ext-vscode": "latest",
         "@theia/preferences": "latest",
         "@theia/preview": "latest",
-        "@theia/process": "latest",
-        "@theia/scm": "latest",
         "@theia/search-in-workspace": "latest",
-        "@theia/task": "latest",
         "@theia/terminal": "latest",
-        "@theia/typehierarchy": "latest",
-        "@theia/userstorage": "latest",
-        "@theia/variable-resolver": "latest",
-        "@theia/vsx-registry": "latest",
-        "@theia/workspace": "latest"
+        "@theia/vsx-registry": "latest"
     },
     "devDependencies": {
         "@theia/cli": "latest"
@@ -118,11 +100,9 @@
         "vscode-builtin-typescript-language-features": "https://github.com/theia-ide/vscode-builtin-extensions/releases/download/v1.39.1-prel/typescript-language-features-1.39.1-prel.vsix",
         "vscode-builtin-vb": "https://github.com/theia-ide/vscode-builtin-extensions/releases/download/v1.39.1-prel/vb-1.39.1-prel.vsix",
         "vscode-builtin-icon-theme-seti": "https://github.com/theia-ide/vscode-builtin-extensions/releases/download/v1.39.1-prel/vscode-theme-seti-1.39.1-prel.vsix",
-        "vscode-builtin-xml": "https://github.com/theia-ide/vscode-builtin-extensions/releases/download/v1.39.1-prel/xml-1.39.1-prel.vsix",        
-        "vscode.editorconfig": "https://github.com/theia-ide/editorconfig-vscode/releases/download/v0.14.4/EditorConfig-0.14.4.vsix",
-        "cdt-gdb-vscode": "https://open-vsx.org/api/eclipse-cdt/cdt-gdb-vscode/0.0.92/file/eclipse-cdt.cdt-gdb-vscode-0.0.92.vsix",
-        "vscode-clangd": "https://open-vsx.org/api/llvm-vs-code-extensions/vscode-clangd/0.1.7/file/llvm-vs-code-extensions.vscode-clangd-0.1.7.vsix",
+        "vscode-builtin-xml": "https://github.com/theia-ide/vscode-builtin-extensions/releases/download/v1.39.1-prel/xml-1.39.1-prel.vsix",
         "vscode-builtin-yaml": "https://github.com/theia-ide/vscode-builtin-extensions/releases/download/v1.39.1-prel/yaml-1.39.1-prel.vsix",
-        "plantuml": "https://open-vsx.org/api/jebbs/plantuml/2.14.0/file/jebbs.plantuml-2.14.0.vsix"
+        "vscode-editorconfig": "https://github.com/theia-ide/editorconfig-vscode/releases/download/v0.14.4/EditorConfig-0.14.4.vsix",
+        "vscode-eslint": "https://github.com/theia-ide/vscode-eslint/releases/download/release%2F2.0.15/vscode-eslint-2.0.15.vsix"
     }
 }
