@@ -27,8 +27,8 @@ RUN chmod g+rw /home && \
 RUN apk add --no-cache git openssh bash libsecret
 
 # java
-RUN apk update && \
-    apk add --no-cache openjdk8 busyBox tzdata curl
+# RUN apk update && \
+#     apk add --no-cache openjdk8 busyBox tzdata curl
 
 ENV HOME /home/theia
 WORKDIR /home/theia
