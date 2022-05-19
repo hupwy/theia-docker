@@ -28,7 +28,7 @@ RUN apt-get update \
 RUN apt-get update \
     && apt-get install -y libsecret-1-0 \
     && apt-get install -y yarn \
-    && apt-get install -y openjdk-8-jdk maven gradle \
+    && apt-get install -y openjdk-11-jdk maven gradle \
     && apt-get clean \
     && apt-get auto-remove -y \
     && rm -rf /var/cache/apt/* \
