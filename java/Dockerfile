@@ -20,23 +20,15 @@ RUN yarn --pure-lockfile && \
 FROM node:${NODE_VERSION}
 
 # Common deps
-RUN apt-get update && \
-    apt-get -y install git \
-                       gpg \
-                       sudo \
-                       libsecret-1-dev
-
-RUN apt-get update \
-    && apt-get upgrade -y \
+RUN apt-get update -y \
+    && apt-get -y install git gpg sudo libsecret-1-dev \
     && apt-get install -y make build-essential libssl-dev \
-    && apt-get install -y ubuntu-make \
+    # && apt-get install -y ubuntu-make \
     && apt-get install -y libbz2-dev libreadline-dev libsqlite3-dev wget curl llvm \
-    && apt-get install -y libncurses5-dev  libncursesw5-dev xz-utils tk-dev
-
-RUN apt-get update \
+    && apt-get install -y libncurses5-dev  libncursesw5-dev xz-utils tk-dev \
     && apt-get install -y libsecret-1-0 \
     && apt-get install -y yarn \
-    && apt-get install -y openjdk-11-jdk maven gradle \
+    && apt-get install -y openjdk-8-jdk maven gradle \
     && apt-get clean \
     && apt-get auto-remove -y \
     && rm -rf /var/cache/apt/* \
