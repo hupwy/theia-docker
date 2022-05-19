@@ -29,6 +29,7 @@ RUN apt-get update && \
 RUN apt-get update \
     && apt-get upgrade -y \
     && apt-get install -y make build-essential libssl-dev \
+    && apt-get install -y ubuntu-make \
     && apt-get install -y libbz2-dev libreadline-dev libsqlite3-dev wget curl llvm \
     && apt-get install -y libncurses5-dev  libncursesw5-dev xz-utils tk-dev
 
