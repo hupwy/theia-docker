@@ -34,7 +34,7 @@ RUN apt-get update -y \
     && rm -rf /var/lib/apt/lists/* \
     && rm -rf /tmp/*
 
-RUN apt-get update -y && apt-get install -y openjdk-11-jdk maven gradle
+# RUN apt-get update -y && apt-get install -y openjdk-8-jdk maven gradle
 
 RUN mkdir -p /home/theia \
     && mkdir -p /home/project
