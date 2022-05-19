@@ -21,7 +21,7 @@ FROM node:${NODE_VERSION}
 
 # Common deps
 RUN apt-get update -y \
-    && apt-get -y install git gpg sudo libsecret-1-dev \
+    && apt-get install -y git gpg sudo \
     && apt-get install -y make build-essential libssl-dev \
     # && apt-get install -y ubuntu-make \
     && apt-get install -y libbz2-dev libreadline-dev libsqlite3-dev wget curl llvm \
