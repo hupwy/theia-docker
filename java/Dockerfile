@@ -19,8 +19,21 @@ RUN yarn --pure-lockfile && \
 
 FROM node:${NODE_VERSION}
 
-# Java
-RUN apt-get update && apt-get -y install openjdk-8-jdk maven gradle
+RUN apt-get update \
+    && apt-get upgrade -y \
+    && apt-get install -y make build-essential libssl-dev \
+    && apt-get install -y libbz2-dev libreadline-dev libsqlite3-dev wget curl llvm \
+    && apt-get install -y libncurses5-dev  libncursesw5-dev xz-utils tk-dev
+
+RUN apt-get update \
+    && apt-get install -y libsecret-1-0 \
+    && apt-get install -y yarn \
+    && apt-get install -y openjdk-8-jdk maven gradle \
+    && apt-get clean \
+    && apt-get auto-remove -y \
+    && rm -rf /var/cache/apt/* \
+    && rm -rf /var/lib/apt/lists/* \
+    && rm -rf /tmp/*
 
 RUN mkdir -p /home/theia \
     && mkdir -p /home/project
