@@ -19,6 +19,13 @@ RUN yarn --pure-lockfile && \
 
 FROM node:${NODE_VERSION}
 
+# Common deps
+RUN apt-get update && \
+    apt-get -y install git \
+                       gpg \
+                       sudo \
+                       libsecret-1-dev
+
 RUN apt-get update \
     && apt-get upgrade -y \
     && apt-get install -y make build-essential libssl-dev \
