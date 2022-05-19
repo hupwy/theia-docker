@@ -28,12 +28,13 @@ RUN apt-get update -y \
     && apt-get install -y libncurses5-dev  libncursesw5-dev xz-utils tk-dev \
     && apt-get install -y libsecret-1-0 \
     && apt-get install -y yarn \
-    && apt-get install -y openjdk-8-jdk maven gradle \
     && apt-get clean \
     && apt-get auto-remove -y \
     && rm -rf /var/cache/apt/* \
     && rm -rf /var/lib/apt/lists/* \
     && rm -rf /tmp/*
+
+RUN apt-get update -y && apt-get install -y openjdk-11-jdk maven gradle
 
 RUN mkdir -p /home/theia \
     && mkdir -p /home/project
