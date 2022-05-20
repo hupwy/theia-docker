@@ -107,8 +107,8 @@ ADD $version.package.json ./package.json
 
 # 添加Tomcat插件
 ADD vscode-tomcat-0.12.1.tar.gz ./plugins/vscode-tomcat-0.12.1.tar.gz
-RUN tar -zxvf ./plugins/vscode-tomcat-0.12.1.tar.gz \
-    && rm -rf ./plugins/vscode-tomcat-0.12.1.tar.gz
+# RUN tar -zxvf ./plugins/vscode-tomcat-0.12.1.tar.gz \
+#     && rm -rf ./plugins/vscode-tomcat-0.12.1.tar.gz
 
 
 RUN if [ "$strip" = "true" ]; then \
