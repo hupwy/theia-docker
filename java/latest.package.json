@@ -104,6 +104,6 @@
         "vscode-builtin-yaml": "https://github.com/theia-ide/vscode-builtin-extensions/releases/download/v1.39.1-prel/yaml-1.39.1-prel.vsix",
         "vscode-editorconfig": "https://github.com/theia-ide/editorconfig-vscode/releases/download/v0.14.4/EditorConfig-0.14.4.vsix",
         "vscode-eslint": "https://github.com/theia-ide/vscode-eslint/releases/download/release%2F2.0.15/vscode-eslint-2.0.15.vsix",
-        "vscode-language":"https://github.com/microsoft/vscode-loc/releases/download/release%2F1.68.0/vscode-language-pack-zh-hant-v1.68.0.vsix"        
+        "vscode-language":"https://github.com/microsoft/vscode-loc/releases/download/release%2F1.68.0/vscode-language-pack-zh-hans-v1.68.0.vsix"        
     }
 }
