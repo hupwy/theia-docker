@@ -149,7 +149,7 @@ RUN chmod g+rw /home && \
     chown -R theia:theia /usr/local/cargo && \
     chown -R theia:theia /usr/local/go && \
     chown -R theia:theia /usr/local/go-packages && \
-    chown -R theia:theia /var/lib/tomcat8
+    chown -R theia:theia /home/theia/tomcat9
 
 # Theia application
 RUN apt-get clean && \
