@@ -152,7 +152,7 @@ RUN apt-get clean && \
   rm -rf /tmp/*
 
 # Change permissions to make the `yang-language-server` executable.
-RUN chmod +x ./plugins/yangster/extension/server/bin/yang-language-server
+# RUN chmod +x ./plugins/yangster/extension/server/bin/yang-language-server
 
 USER theia
 EXPOSE 3000
