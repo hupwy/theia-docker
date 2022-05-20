@@ -124,9 +124,14 @@ yarn --cache-folder ./ycache && rm -rf ./ycache && \
 FROM common
 
 # Java,Tomcat
-RUN apt-get update && apt-get -y install openjdk-11-jdk maven gradle tomcat8
+RUN apt-get update && apt-get -y install openjdk-11-jdk maven gradle
 
 WORKDIR /home/theia
+
+# 下载tomcat
+RUN wget http://mirrors.shu.edu.cn/apache/tomcat/tomcat-8/v8.0.53/bin/apache-tomcat-8.0.53.tar.gz \
+    && sudo tar -zxvf apache-tomcat-8.0.53.tar.gz \
+    && sudo rm -rf apache-tomcat-8.0.53.tar.gz
 
 COPY --from=theia --chown=theia:theia /home/theia /home/theia
 
