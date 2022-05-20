@@ -129,9 +129,10 @@ RUN apt-get update && apt-get -y install openjdk-11-jdk maven gradle
 WORKDIR /home/theia
 
 # 下载tomcat
-RUN sudo wget wget https://dlcdn.apache.org/tomcat/tomcat-9/v9.0.63/bin/apache-tomcat-9.0.63-deployer.tar.gz \
-    && sudo tar -zxvf apache-tomcat-9.0.63-deployer.tar.gz \
-    && sudo rm -rf apache-tomcat-9.0.63-deployer.tar.gz
+RUN wget https://dlcdn.apache.org/tomcat/tomcat-9/v9.0.63/bin/apache-tomcat-9.0.63.tar.gz \
+    && sudo tar -zxvf apache-tomcat-9.0.63.tar.gz \
+    && sudo rm -rf apache-tomcat-9.0.63.tar.gz \
+    && sudo mv apache-tomcat-9.0.63 tomcat9
 
 COPY --from=theia --chown=theia:theia /home/theia /home/theia
 
