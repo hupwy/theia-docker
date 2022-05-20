@@ -123,8 +123,8 @@ yarn --cache-folder ./ycache && rm -rf ./ycache && \
 
 FROM common
 
-# Java
-RUN apt-get update && apt-get -y install openjdk-11-jdk maven gradle
+# Java,Tomcat
+RUN apt-get update && apt-get -y install openjdk-11-jdk maven gradle tomcat8
 
 WORKDIR /home/theia
 
