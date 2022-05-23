@@ -104,9 +104,12 @@
         "vscode-builtin-yaml": "https://github.com/theia-ide/vscode-builtin-extensions/releases/download/v1.39.1-prel/yaml-1.39.1-prel.vsix",
         "vscode-editorconfig": "https://github.com/theia-ide/editorconfig-vscode/releases/download/v0.14.4/EditorConfig-0.14.4.vsix",
         "vscode-eslint": "https://github.com/theia-ide/vscode-eslint/releases/download/release%2F2.0.15/vscode-eslint-2.0.15.vsix",
-        "vscode-language":"https://github.com/microsoft/vscode-loc/releases/download/release%2F1.68.0/vscode-language-pack-zh-hans-v1.68.0.vsix",
-		"vscode-java-pack":"https://marketplace.visualstudio.com/_apis/public/gallery/publishers/vscjava/vsextensions/vscode-java-pack/0.22.2022041600/vspackage",
-		"vscode-boot-dev-pack":"https://marketplace.visualstudio.com/_apis/public/gallery/publishers/Pivotal/vsextensions/vscode-boot-dev-pack/0.1.0/vspackage"
+        "vscode-language-pack-zh-hans":"https://marketplace.visualstudio.com/_apis/public/gallery/publishers/MS-CEINTL/vsextensions/vscode-language-pack-zh-hans/1.68.0/vspackage",
+		"vscode-java-debug":"https://marketplace.visualstudio.com/_apis/public/gallery/publishers/vscjava/vsextensions/vscode-java-debug/0.40.2022041411/vspackage",
+		"vscode-java-test":"https://marketplace.visualstudio.com/_apis/public/gallery/publishers/vscjava/vsextensions/vscode-java-test/0.35.2022051902/vspackage",
+		"redhat-java":"https://github.com/redhat-developer/vscode-java/releases/download/v1.6.0/redhat.java-1.6.0@linux-x64.vsix",
+		"vscode-maven":"https://marketplace.visualstudio.com/_apis/public/gallery/publishers/vscjava/vsextensions/vscode-maven/0.35.2022050503/vspackage",
+		"vscode-project-manager-java":"https://marketplace.visualstudio.com/_apis/public/gallery/publishers/vscjava/vsextensions/vscode-java-dependency/0.19.2022050600/vspackage"
 		
     }
 }
