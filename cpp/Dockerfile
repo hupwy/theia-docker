@@ -157,10 +157,6 @@ RUN wget "https://github.com/Kitware/CMake/releases/download/v$CMAKE_VERSION/cma
     ./cmake-$CMAKE_VERSION-Linux-x86_64.sh --prefix=/usr/ --skip-license && \
     rm cmake-$CMAKE_VERSION-Linux-x86_64.sh
 
-# 添加样例工程
-WORKDIR /home
-ADD ./src/spring-boot-demo ./project/spring-boot-demo
-
 WORKDIR /home/theia
 
 COPY --from=theia --chown=theia:theia /home/theia /home/theia
