@@ -1,0 +1,24 @@
+{
+  "java.home": "/usr/lib/jvm/jdk-11",
+  "spring-boot.ls.java.home": "/usr/lib/jvm/jdk-11",
+  "java.configuration.runtimes": [
+    {
+      "name": "JavaSE-1.8",
+      "path": "/usr/lib/jvm/jdk-11",
+      "sources": "/usr/lib/jvm/java-8-openjdk-amd64/lib/src.zip",
+      "default": true
+    },
+    {
+      "name": "JavaSE-11",
+      "path": "/usr/lib/jvm/jdk-11",
+      "default": false
+    },
+  ],
+  "files.exclude": {
+    "**/.classpath": true,
+    "**/.project": true,
+    "**/.settings": true,
+    "**/.factorypath": true
+  },
+  "editor.fontLigatures": false
+}
