@@ -1,11 +1,10 @@
 FROM ubuntu:18.04 as common
 
+ENV DEBIAN_FRONTEND noninteractive
+
 ARG NODE_VERSION=12.18.3
-
-ENV NODE_VERSION=$NODE_VERSION
-
-# User account
-RUN adduser --disabled-password --gecos '' theia
+ENV NODE_VERSION $NODE_VERSION
+ENV YARN_VERSION 1.22.5
 
 # Common deps
 RUN apt-get update && \
@@ -15,10 +14,22 @@ RUN apt-get update && \
                        gpg \
                        python \
                        wget \
-                       xz-utils && \
-    rm -rf /var/lib/apt/lists/*
+                       xz-utils \
+                       sudo \
+                       libsecret-1-dev \
+    && \
+    apt-get clean && \
+    apt-get autoremove -y && \
+    rm -rf /var/cache/apt/* && \
+    rm -rf /var/lib/apt/lists/* && \
+    rm -rf /tmp/*
 
-# Install Node.js
+## User account
+RUN adduser --disabled-password --gecos '' theia && \
+    adduser theia sudo && \
+    echo '%sudo ALL=(ALL) NOPASSWD:ALL' >> /etc/sudoers
+
+# Install node and yarn
 # From: https://github.com/nodejs/docker-node/blob/6b8d86d6ad59e0d1e7a94cec2e909cad137a028f/8/Dockerfile
 
 # gpg keys listed at https://github.com/nodejs/node#release-keys
@@ -60,29 +71,13 @@ RUN ARCH= && dpkgArch="$(dpkg --print-architecture)" \
     && rm "node-v$NODE_VERSION-linux-$ARCH.tar.xz" SHASUMS256.txt.asc SHASUMS256.txt \
     && ln -s /usr/local/bin/node /usr/local/bin/nodejs
 
-FROM common as theia
-RUN apt-get update && apt-get -y install libsecret-1-dev
-ARG GITHUB_TOKEN
-# Use "latest" or "next" version for Theia packages
-ARG version=latest
-# Optionally build a striped Theia application with no map file or .ts sources.
-# Makes image ~150MB smaller when enabled
-ARG strip=false
-
-ENV DEBIAN_FRONTEND=noninteractive \
-    YARN_VERSION=1.22.5 \
-    strip=$strip
-
-# Install Yarn
-# From: https://github.com/nodejs/docker-node/blob/6b8d86d6ad59e0d1e7a94cec2e909cad137a028f/8/Dockerfile
-
 RUN set -ex \
     && for key in \
     6A010C5166006599AA17F08146C2130DFD2497F5 \
     ; do \
     gpg --batch --keyserver keyserver.ubuntu.com --recv-key "$key" || \
     gpg --batch --keyserver keys.openpgp.org --recv-key "$key" || \
-    gpg --batch --keyserver pgp.mit.edu --recv-keys "$key" || \
+    gpg --batch --keyserver pgp.mit.edu --recv-key "$key" || \
     gpg --batch --keyserver keyserver.pgp.com --recv-keys "$key" ; \
     done \
     && curl -fSLO --compressed "https://yarnpkg.com/downloads/$YARN_VERSION/yarn-v$YARN_VERSION.tar.gz" \
@@ -94,11 +89,21 @@ RUN set -ex \
     && ln -s /opt/yarn/bin/yarn /usr/local/bin/yarnpkg \
     && rm yarn-v$YARN_VERSION.tar.gz.asc yarn-v$YARN_VERSION.tar.gz
 
-# Theia application
+FROM common as theia
 
+ARG GITHUB_TOKEN
+
+# Use "latest" or "next" version for Theia packages
+ARG version=latest
+
+# Optionally build a striped Theia application with no map file or .ts sources.
+# Makes image ~150MB smaller when enabled
+ARG strip=false
+ENV strip=$strip
+
+USER theia
 WORKDIR /home/theia
-
-ADD $version.package.json package.json
+ADD $version.package.json ./package.json
 
 RUN if [ "$strip" = "true" ]; then \
 yarn --pure-lockfile && \
@@ -118,26 +123,15 @@ yarn --cache-folder ./ycache && rm -rf ./ycache && \
 
 FROM common
 
+# C/C++
+# public LLVM PPA, development version of LLVM
 ARG LLVM=14
-ARG CMAKE_VERSION=3.18.1
 
-RUN apt-get update && \
-    apt-get -y install libsecret-1-0 && \
-    rm -rf /var/lib/apt/lists/*
-
-COPY --from=theia /home/theia /home/theia
-WORKDIR /home/theia
-
-# C/C++ Developer tools
-
-# gcc 10 repository
 RUN apt-get update && \
     apt-get install -y software-properties-common && \
     add-apt-repository ppa:ubuntu-toolchain-r/test && \
     apt-get remove -y software-properties-common
 
-# Install clangd and clang-tidy from the public LLVM PPA (nightly build / development version)
-# And also the GDB debugger from the Ubuntu repos
 RUN wget -O - https://apt.llvm.org/llvm-snapshot.gpg.key | apt-key add - && \
     echo "deb http://apt.llvm.org/bionic/ llvm-toolchain-bionic main" > /etc/apt/sources.list.d/llvm.list && \
     apt-get update && \
@@ -155,21 +149,51 @@ RUN wget -O - https://apt.llvm.org/llvm-snapshot.gpg.key | apt-key add - && \
     ln -s /usr/bin/clang-tidy-$LLVM /usr/bin/clang-tidy && \
     ln -s /usr/bin/clangd-$LLVM /usr/bin/clangd
 
-
 # Install latest stable CMake
+ARG CMAKE_VERSION=3.18.1
+
 RUN wget "https://github.com/Kitware/CMake/releases/download/v$CMAKE_VERSION/cmake-$CMAKE_VERSION-Linux-x86_64.sh" && \
     chmod a+x cmake-$CMAKE_VERSION-Linux-x86_64.sh && \
     ./cmake-$CMAKE_VERSION-Linux-x86_64.sh --prefix=/usr/ --skip-license && \
     rm cmake-$CMAKE_VERSION-Linux-x86_64.sh
 
+WORKDIR /home/theia
+
+COPY --from=theia --chown=theia:theia /home/theia /home/theia
+
+RUN apt-get update && apt-get -y install libsecret-1-0
+
 RUN chmod g+rw /home && \
     mkdir -p /home/project && \
-    chown -R theia:theia /home/theia && \
-    chown -R theia:theia /home/project;
+    mkdir -p /home/theia/.pub-cache/bin && \
+    mkdir -p /usr/local/cargo && \
+    mkdir -p /usr/local/go && \
+    mkdir -p /usr/local/go-packages && \
+    chown -R theia:theia /home/project && \
+    chown -R theia:theia /home/theia/.pub-cache/bin && \
+    chown -R theia:theia /usr/local/cargo && \
+    chown -R theia:theia /usr/local/go && \
+    chown -R theia:theia /usr/local/go-packages
+
+# Theia application
+RUN apt-get clean && \
+  apt-get autoremove -y && \
+  rm -rf /var/cache/apt/* && \
+  rm -rf /var/lib/apt/lists/* && \
+  rm -rf /tmp/*
+
+# Change permissions to make the `yang-language-server` executable.
+# RUN chmod +x ./plugins/yangster/extension/server/bin/yang-language-server
 
 USER theia
 EXPOSE 3000
+# Configure Theia
 ENV SHELL=/bin/bash \
-    THEIA_DEFAULT_PLUGINS=local-dir:/home/theia/plugins
+    THEIA_DEFAULT_PLUGINS=local-dir:/home/theia/plugins  \
+    # Configure user Go path
+    GOPATH=/home/project
+
+ENV LC_ALL=C.UTF-8
+ENV LANG=C.UTF-8
 
 ENTRYPOINT [ "node", "/home/theia/src-gen/backend/main.js", "/home/project", "--hostname=0.0.0.0" ]
