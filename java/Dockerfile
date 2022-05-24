@@ -128,7 +128,7 @@ RUN apt-get update && apt-get -y install openjdk-11-jdk maven gradle
 
 # 添加样例工程
 WORKDIR /home
-ADD ./src ./project
+ADD ./src/spring-boot-demo ./project/spring-boot-demo
 
 WORKDIR /home/theia
 
